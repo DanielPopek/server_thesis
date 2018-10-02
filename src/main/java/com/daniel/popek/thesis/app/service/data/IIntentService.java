@@ -13,4 +13,6 @@ public interface IIntentService {
     public void deleteRootIntent(Intent intent);
 
     public void deleteRootIntentByConversation(Conversation conversation);
+
+    public IntentDTO getRootIntentByConversationHash(String hash);
 }

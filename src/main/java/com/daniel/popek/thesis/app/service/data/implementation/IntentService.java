@@ -3,6 +3,7 @@ package com.daniel.popek.thesis.app.service.data.implementation;
 import com.daniel.popek.thesis.app.model.DTO.design.IntentDTO;
 import com.daniel.popek.thesis.app.model.entities.Conversation;
 import com.daniel.popek.thesis.app.model.entities.Intent;
+import com.daniel.popek.thesis.app.repository.ConversationRepository;
 import com.daniel.popek.thesis.app.repository.IntentRepository;
 import com.daniel.popek.thesis.app.service.data.IIntentService;
 import com.daniel.popek.thesis.app.service.mappers.IIntentMappingService;
@@ -14,6 +15,9 @@ public class IntentService  implements IIntentService{
 
     @Autowired
     IntentRepository intentRepository;
+
+    @Autowired
+    ConversationRepository conversationRepository;
 
     @Autowired
     IIntentMappingService intentMappingService;
@@ -33,6 +37,13 @@ public class IntentService  implements IIntentService{
     public void deleteRootIntentByConversation(Conversation conversation) {
         Intent intent=intentRepository.findByConversationByConversationIdAndRootIsTrue(conversation).get(0);
         intentRepository.delete(intent);
+    }
+
+    @Override
+    public IntentDTO getRootIntentByConversationHash(String hash) {
+        Conversation conversation=conversationRepository.findByHash(hash);
+        Intent intent=intentRepository.findByConversationByConversationIdAndRootIsTrue(conversation).get(0);
+        return intentMappingService.mapIntentEntityToDTO(intent);
     }
 
 

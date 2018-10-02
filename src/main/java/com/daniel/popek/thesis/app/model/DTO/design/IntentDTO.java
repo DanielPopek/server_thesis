@@ -7,7 +7,7 @@ public class IntentDTO {
     private List<IntentDTO> subintents;
     private List<String> answerSamples;
     private List<String> trainingSamples;
-    private EventDTO event;
+    private List<String> events;
 
     public String getName() {
         return name;
@@ -41,11 +41,11 @@ public class IntentDTO {
         this.trainingSamples = trainingSamples;
     }
 
-    public EventDTO getEvent() {
-        return event;
+    public List<String> getEvents() {
+        return events;
     }
 
-    public void setEvent(EventDTO event) {
-        this.event = event;
+    public void setEvents(List<String> events) {
+        this.events = events;
     }
 }

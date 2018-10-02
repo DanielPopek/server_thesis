@@ -1,10 +1,7 @@
 package com.daniel.popek.thesis.app.service.mappers.implementation;
 
 import com.daniel.popek.thesis.app.model.DTO.design.IntentDTO;
-import com.daniel.popek.thesis.app.model.entities.Answersample;
-import com.daniel.popek.thesis.app.model.entities.Conversation;
-import com.daniel.popek.thesis.app.model.entities.Intent;
-import com.daniel.popek.thesis.app.model.entities.Trainingsample;
+import com.daniel.popek.thesis.app.model.entities.*;
 import com.daniel.popek.thesis.app.service.mappers.IIntentMappingService;
 import com.daniel.popek.thesis.app.service.utils.IHashingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +13,6 @@ import java.util.List;
 
 @Service
 public class IntentMappingService implements IIntentMappingService {
-
-    @Autowired
-    EventMappingService eventMappingService;
 
     @Autowired
     IHashingService hashingService;
@@ -36,7 +30,7 @@ public class IntentMappingService implements IIntentMappingService {
     {
         IntentDTO dto = new IntentDTO();
         dto.setName(intent.getName());
-        dto.setEvent(eventMappingService.mapEventEntityToDTO(intent.getEventByEventId()));
+        dto.setEvents(mapEventEntitiesToDTOs(intent.getEventByEventId()));
         dto.setTrainingSamples(mapTrainingSampleEntitiesToDTOs(intent.getTrainingsamplesById()));
         dto.setAnswerSamples(mapAnswerEntitiesToDTOs(intent.getAnswersamplesById()));
         List<IntentDTO> subintents= new ArrayList<>();
@@ -54,7 +48,7 @@ public class IntentMappingService implements IIntentMappingService {
         intent.setName(dto.getName());
         intent.setHash(hashingService.createHash(intent));
         intent.setConversationByConversationId(conversation);
-        intent.setEventByEventId(eventMappingService.mapEventDTOtoEntity(dto.getEvent()));
+        intent.setEventByEventId(mapEventsToEntities(dto.getEvents(),intent));
         intent.setAnswersamplesById(mapAnswersToEntities(dto.getAnswerSamples(),intent));
         intent.setTrainingsamplesById(mapTrainingSamplesToEntities(dto.getTrainingSamples(),intent));
         intent.setIntentByIntentId(parentIntent);
@@ -119,6 +113,31 @@ public class IntentMappingService implements IIntentMappingService {
         }
 
         return sampleList;
+    }
+
+    private List<Event> mapEventsToEntities(List<String> events, Intent intent)
+    {
+        List<Event> eventList=new ArrayList<>();
+        for (String value:events
+                ) {
+            Event event=new Event();
+            event.setIntentByIntentId(intent);
+            event.setName(value);
+            eventList.add(event);
+        }
+
+        return eventList;
+    }
+
+    private List<String> mapEventEntitiesToDTOs(Collection<Event> events)
+    {
+        List<String> eventList=new ArrayList<>();
+        for (Event event:events
+                ) {
+            eventList.add(event.getName());
+        }
+
+        return eventList;
     }
 
 

@@ -1,6 +1,6 @@
 package com.daniel.popek.thesis.app.controller;
 
-import com.daniel.popek.thesis.app.model.DTO.design.EventDTO;
+
 import com.daniel.popek.thesis.app.model.DTO.design.IntentDTO;
 import com.daniel.popek.thesis.app.model.entities.Answersample;
 import com.daniel.popek.thesis.app.model.entities.Conversation;
@@ -60,9 +60,9 @@ public class SampleRestController {
 
         Event event= new Event();
         event.setName("TEST");
-        event.setMessage("MESSAGE");
 
-        grandson.setEventByEventId(event);
+        List<Event> eventList= new ArrayList<>();
+        grandson.setEventByEventId(eventList);
 
         son.setIntentsById(new ArrayList<>());
         son.getIntentsById().add(grandson);
@@ -175,57 +175,57 @@ public class SampleRestController {
 
 
 
-    @RequestMapping(method = RequestMethod.GET, value = "/dto")
-    public IntentDTO getSampleDTO() {
-        //intents
-        IntentDTO parent=new IntentDTO();
-        IntentDTO son1=new IntentDTO();
-        IntentDTO son2=new IntentDTO();
-        IntentDTO grandson=new IntentDTO();
-        //field objects
-        EventDTO event= new EventDTO();
-        event.setName("sample event");
-        event.setEventMessage("sample event message");
-
-        List<String> sampleAnswers=new ArrayList<>();
-        sampleAnswers.add("It's great.");
-        sampleAnswers.add("Life is beautiful");
-        sampleAnswers.add("Come on, don't cry");
-
-        List<String> trainingSet=new ArrayList<>();
-        trainingSet.add("How's your life");
-        trainingSet.add("How is it going?");
-        trainingSet.add("How are you doing?");
-        //filed assigning
-        parent.setName("parent");
-        parent.setSubintents(new ArrayList<>());
-        parent.getSubintents().add(son1);
-        parent.getSubintents().add(son2);
-        parent.setAnswerSamples(sampleAnswers);
-        parent.setEvent(event);
-        parent.setTrainingSamples(trainingSet);
-        //
-        son1.setName("son1");
-        son1.setSubintents(new ArrayList<>());
-        son1.getSubintents().add(grandson);
-        son1.setAnswerSamples(sampleAnswers);
-        son1.setEvent(event);
-        son1.setTrainingSamples(trainingSet);
-        //
-        son2.setName("son2");
-        son2.setSubintents(new ArrayList<>());
-        son2.setAnswerSamples(sampleAnswers);
-        son2.setEvent(event);
-        son2.setTrainingSamples(trainingSet);
-        //
-        grandson.setName("grandson");
-        grandson.setSubintents(new ArrayList<>());
-        grandson.setAnswerSamples(sampleAnswers);
-        grandson.setEvent(event);
-        grandson.setTrainingSamples(trainingSet);
-
-        return parent;
-    }
+//    @RequestMapping(method = RequestMethod.GET, value = "/dto")
+//    public IntentDTO getSampleDTO() {
+//        //intents
+//        IntentDTO parent=new IntentDTO();
+//        IntentDTO son1=new IntentDTO();
+//        IntentDTO son2=new IntentDTO();
+//        IntentDTO grandson=new IntentDTO();
+//        //field objects
+//        EventDTO event= new EventDTO();
+//        event.setName("sample event");
+//        event.setEventMessage("sample event message");
+//
+//        List<String> sampleAnswers=new ArrayList<>();
+//        sampleAnswers.add("It's great.");
+//        sampleAnswers.add("Life is beautiful");
+//        sampleAnswers.add("Come on, don't cry");
+//
+//        List<String> trainingSet=new ArrayList<>();
+//        trainingSet.add("How's your life");
+//        trainingSet.add("How is it going?");
+//        trainingSet.add("How are you doing?");
+//        //filed assigning
+//        parent.setName("parent");
+//        parent.setSubintents(new ArrayList<>());
+//        parent.getSubintents().add(son1);
+//        parent.getSubintents().add(son2);
+//        parent.setAnswerSamples(sampleAnswers);
+//        parent.setEvent(event);
+//        parent.setTrainingSamples(trainingSet);
+//        //
+//        son1.setName("son1");
+//        son1.setSubintents(new ArrayList<>());
+//        son1.getSubintents().add(grandson);
+//        son1.setAnswerSamples(sampleAnswers);
+//        son1.setEvent(event);
+//        son1.setTrainingSamples(trainingSet);
+//        //
+//        son2.setName("son2");
+//        son2.setSubintents(new ArrayList<>());
+//        son2.setAnswerSamples(sampleAnswers);
+//        son2.setEvent(event);
+//        son2.setTrainingSamples(trainingSet);
+//        //
+//        grandson.setName("grandson");
+//        grandson.setSubintents(new ArrayList<>());
+//        grandson.setAnswerSamples(sampleAnswers);
+//        grandson.setEvent(event);
+//        grandson.setTrainingSamples(trainingSet);
+//
+//        return parent;
+//    }
 
     @RequestMapping(method = RequestMethod.POST, value = "/load")
     public Intent getSampleDTO(@RequestBody IntentDTO intentDTO) {

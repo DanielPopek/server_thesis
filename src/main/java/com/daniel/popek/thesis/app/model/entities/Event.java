@@ -1,5 +1,7 @@
 package com.daniel.popek.thesis.app.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -7,7 +9,7 @@ import java.util.Objects;
 public class Event {
     private Integer id;
     private String name;
-    private String message;
+    private Intent intentByIntentId;
 
     @Id
     @Column(name = "id")
@@ -30,14 +32,16 @@ public class Event {
         this.name = name;
     }
 
-    @Basic
-    @Column(name = "message")
-    public String getMessage() {
-        return message;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "intent_id", referencedColumnName = "id", nullable = false)
+    public Intent getIntentByIntentId() {
+        return intentByIntentId;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setIntentByIntentId(Intent intentByIntentId) {
+        this.intentByIntentId = intentByIntentId;
     }
 
     @Override
@@ -46,13 +50,12 @@ public class Event {
         if (o == null || getClass() != o.getClass()) return false;
         Event event = (Event) o;
         return Objects.equals(id, event.id) &&
-                Objects.equals(name, event.name) &&
-                Objects.equals(message, event.message);
+                Objects.equals(name, event.name);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, name, message);
+        return Objects.hash(id, name);
     }
 }

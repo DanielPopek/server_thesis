@@ -16,7 +16,8 @@ public class Intent {
     private Collection<Answersample> answersamplesById;
     private Intent intentByIntentId;
     private Collection<Intent> intentsById;
-    private Event eventByEventId;
+    private Collection<Event> eventByEventId;
+   // private Event eventByEventId;
     private Conversation conversationByConversationId;
     private Collection<Trainingsample> trainingsamplesById;
 
@@ -106,13 +107,22 @@ public class Intent {
         this.intentsById = intentsById;
     }
 
-    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.REMOVE})
-    @JoinColumn(name = "event_id", referencedColumnName = "id")
-    public Event getEventByEventId() {
+//    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.REMOVE})
+//    @JoinColumn(name = "event_id", referencedColumnName = "id")
+//    public Event getEventByEventId() {
+//        return eventByEventId;
+//    }
+//
+//    public void setEventByEventId(Event eventByEventId) {
+//        this.eventByEventId = eventByEventId;
+//    }
+
+    @OneToMany(mappedBy = "intentByIntentId",cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.REMOVE})
+    public Collection<Event> getEventByEventId() {
         return eventByEventId;
     }
 
-    public void setEventByEventId(Event eventByEventId) {
+    public void setEventByEventId(Collection<Event> eventByEventId) {
         this.eventByEventId = eventByEventId;
     }
 
