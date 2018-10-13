@@ -16,4 +16,6 @@ public interface ConversationRepository  extends CrudRepository<Conversation, In
     Conversation findById(int id);
 
     Conversation findByHash( String hash);
+
+    List<Conversation> findAllByDesignerId(Integer id);
 }

@@ -1,6 +1,7 @@
 package com.daniel.popek.thesis.app.service.mappers.implementation;
 
 import com.daniel.popek.thesis.app.model.DTO.design.ConversationDTO;
+import com.daniel.popek.thesis.app.model.DTO.design.ConversationListDTO;
 import com.daniel.popek.thesis.app.model.entities.Conversation;
 import com.daniel.popek.thesis.app.repository.IntentRepository;
 import com.daniel.popek.thesis.app.service.mappers.IConversationMappingService;
@@ -42,7 +43,18 @@ public class ConversationMappingService implements IConversationMappingService {
         Conversation conversation= new Conversation();
         conversation.setName(dto.getName());
         conversation.setHash(hashingService.createHash(conversation));
-        conversation.setDesigner_id(1);
+        conversation.setDesignerId(1);
         return conversation;
     }
+
+    @Override
+    public ConversationListDTO mapConversationEntityToListDTO(Conversation conversation) {
+        ConversationListDTO dto = new ConversationListDTO();
+        dto.setConversationId(conversation.getId());
+        dto.setConversationHash(conversation.getHash());
+        dto.setName(conversation.getName());
+        dto.setDescription(conversation.getDescription());
+        return dto;
+    }
+
 }

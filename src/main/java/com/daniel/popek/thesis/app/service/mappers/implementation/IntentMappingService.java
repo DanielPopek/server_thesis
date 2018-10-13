@@ -53,6 +53,7 @@ public class IntentMappingService implements IIntentMappingService {
         intent.setTrainingsamplesById(mapTrainingSamplesToEntities(dto.getTrainingSamples(),intent));
         intent.setIntentByIntentId(parentIntent);
         List<Intent> children= new ArrayList<>();
+        if(dto.getSubintents()!=null)
         for (IntentDTO subintent:dto.getSubintents()
              ) {
             Intent child=mapIntentDTOtoEntityRecursive(subintent,intent,conversation);
@@ -68,37 +69,43 @@ public class IntentMappingService implements IIntentMappingService {
     private List<Answersample> mapAnswersToEntities(List<String> answers, Intent intent)
     {
         List<Answersample> answersList=new ArrayList<>();
-        for (String answerString:answers
-             ) {
-            Answersample sample=new Answersample();
-            sample.setIntentByIntentId(intent);
-            sample.setValue(answerString);
-            answersList.add(sample);
+        if(answers!=null) {
+            for (String answerString : answers
+                    ) {
+                Answersample sample = new Answersample();
+                sample.setIntentByIntentId(intent);
+                sample.setValue(answerString);
+                answersList.add(sample);
+            }
         }
-
         return answersList;
     }
 
     private List<String> mapAnswerEntitiesToDTOs(Collection<Answersample> answers)
     {
         List<String> answersList=new ArrayList<>();
-        for (Answersample answersample:answers
-                ) {
-            answersList.add(answersample.getValue());
+        if(answers!=null)
+        {
+            for (Answersample answersample:answers
+                    ) {
+                answersList.add(answersample.getValue());
+            }
         }
-
         return answersList;
     }
 
     private List<Trainingsample> mapTrainingSamplesToEntities(List<String> trainingSamples, Intent intent)
     {
         List<Trainingsample> trainingsampleList=new ArrayList<>();
-        for (String value:trainingSamples
-                ) {
-            Trainingsample sample=new Trainingsample();
-            sample.setIntentByIntentId(intent);
-            sample.setValue(value);
-            trainingsampleList.add(sample);
+        if(trainingSamples!=null)
+        {
+            for (String value:trainingSamples
+                    ) {
+                Trainingsample sample=new Trainingsample();
+                sample.setIntentByIntentId(intent);
+                sample.setValue(value);
+                trainingsampleList.add(sample);
+            }
         }
 
         return trainingsampleList;
@@ -107,36 +114,39 @@ public class IntentMappingService implements IIntentMappingService {
     private List<String> mapTrainingSampleEntitiesToDTOs(Collection<Trainingsample> trainingSamples)
     {
         List<String> sampleList=new ArrayList<>();
-        for (Trainingsample trainingSample:trainingSamples
-                ) {
-            sampleList.add(trainingSample.getValue());
+        if(trainingSamples!=null) {
+            for (Trainingsample trainingSample : trainingSamples
+                    ) {
+                sampleList.add(trainingSample.getValue());
+            }
         }
-
         return sampleList;
     }
 
     private List<Event> mapEventsToEntities(List<String> events, Intent intent)
     {
         List<Event> eventList=new ArrayList<>();
-        for (String value:events
-                ) {
-            Event event=new Event();
-            event.setIntentByIntentId(intent);
-            event.setName(value);
-            eventList.add(event);
+        if(events!=null) {
+            for (String value : events
+                    ) {
+                Event event = new Event();
+                event.setIntentByIntentId(intent);
+                event.setName(value);
+                eventList.add(event);
+            }
         }
-
         return eventList;
     }
 
     private List<String> mapEventEntitiesToDTOs(Collection<Event> events)
     {
         List<String> eventList=new ArrayList<>();
-        for (Event event:events
-                ) {
-            eventList.add(event.getName());
+        if(events!=null) {
+            for (Event event : events
+                    ) {
+                eventList.add(event.getName());
+            }
         }
-
         return eventList;
     }
 

@@ -8,7 +8,8 @@ public class Conversation {
     private Integer id;
     private String hash;
     private String name;
-    private Integer designer_id;
+    private Integer designerId;
+    private String description;
 
     @Id
     @Column(name = "id")
@@ -43,12 +44,23 @@ public class Conversation {
 
     @Basic
     @Column(name = "designer_id")
-    public Integer getDesigner_id() {
-        return designer_id;
+    public Integer getDesignerId() {
+        return designerId;
     }
 
-    public void setDesigner_id(Integer designer_id) {
-        this.designer_id = designer_id;
+    public void setDesignerId(Integer designer_id) {
+        this.designerId = designer_id;
+    }
+
+
+    @Basic
+    @Column(name = "description")
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

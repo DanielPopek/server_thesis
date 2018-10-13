@@ -47,8 +47,7 @@ public class IntentService  implements IIntentService{
     }
 
 
-//    @Transactional(propagation = Propagation.REQUIRES_NEW,
-//            rollbackFor = IllegalMonitorStateException.class)
+
 
 
 
