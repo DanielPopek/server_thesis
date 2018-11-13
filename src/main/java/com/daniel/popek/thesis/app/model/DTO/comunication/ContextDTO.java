@@ -4,26 +4,12 @@ import com.daniel.popek.thesis.app.component.constant.enums.ContextSuccessCodeEn
 
 public class ContextDTO {
 
-    private String position;
-    private ContextSuccessCodeEnum code;
+    private String conversationHash;
+    private String intentHash;
     private String message;
     private String event;
+    private Object data;
 
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
-    public ContextSuccessCodeEnum getCode() {
-        return code;
-    }
-
-    public void setCode(ContextSuccessCodeEnum code) {
-        this.code = code;
-    }
 
     public String getMessage() {
         return message;
@@ -39,5 +25,29 @@ public class ContextDTO {
 
     public void setEvent(String event) {
         this.event = event;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    public String getConversationHash() {
+        return conversationHash;
+    }
+
+    public void setConversationHash(String conversationHash) {
+        this.conversationHash = conversationHash;
+    }
+
+    public String getIntentHash() {
+        return intentHash;
+    }
+
+    public void setIntentHash(String intentHash) {
+        this.intentHash = intentHash;
     }
 }

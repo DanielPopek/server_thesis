@@ -7,6 +7,7 @@ import com.daniel.popek.thesis.app.repository.ConversationRepository;
 import com.daniel.popek.thesis.app.repository.IntentRepository;
 import com.daniel.popek.thesis.app.service.data.IIntentService;
 import com.daniel.popek.thesis.app.service.mappers.IIntentMappingService;
+import org.assertj.core.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,9 +47,27 @@ public class IntentService  implements IIntentService{
         return intentMappingService.mapIntentEntityToDTO(intent);
     }
 
+    @Override
+    public Intent getIntentOrRootByHash(String hash, String conversationHash) {
+        Intent intent;
+        if(Strings.isNullOrEmpty(hash))
+        {
+            Conversation conversation=conversationRepository.findByHash(conversationHash);
+            intent=intentRepository.findByConversationByConversationIdAndRootIsTrue(conversation).get(0);
+        }
+        else
+            intent=intentRepository.findByHash(hash);
+//        {
+//            intent=intentRepository.findByHash(hash);
+//            if(intent.getIntentsById()==null||intent.getIntentsById().size()==0)
+//            {
+//                Conversation conversation=conversationRepository.findByHash(conversationHash);
+//                intent=intentRepository.findByConversationByConversationIdAndRootIsTrue(conversation).get(0);
+//            }
+//        }
 
-
-
+        return intent;
+    }
 
 
 }

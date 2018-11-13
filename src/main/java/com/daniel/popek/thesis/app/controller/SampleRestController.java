@@ -2,6 +2,9 @@ package com.daniel.popek.thesis.app.controller;
 
 
 import com.daniel.popek.thesis.app.model.DTO.design.IntentDTO;
+import com.daniel.popek.thesis.app.model.classification.ClassificationInputIntent;
+import com.daniel.popek.thesis.app.model.classification.ClassificationQuery;
+import com.daniel.popek.thesis.app.model.classification.ClassifyInput;
 import com.daniel.popek.thesis.app.model.entities.Answersample;
 import com.daniel.popek.thesis.app.model.entities.Conversation;
 import com.daniel.popek.thesis.app.model.entities.Event;
@@ -10,12 +13,15 @@ import com.daniel.popek.thesis.app.repository.ConversationRepository;
 import com.daniel.popek.thesis.app.repository.IntentRepository;
 import com.daniel.popek.thesis.app.service.data.IConversationService;
 import com.daniel.popek.thesis.app.service.mappers.implementation.IntentMappingService;
+import com.daniel.popek.thesis.app.service.ml_classifier.IClassifierService;
+import com.daniel.popek.thesis.app.service.ml_classifier.ITokenizerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -33,6 +39,12 @@ public class SampleRestController {
 
     @Autowired
     IConversationService conversationService;
+
+    @Autowired
+    ITokenizerService tokenizerService;
+
+    @Autowired
+    IClassifierService classifierService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/info")
     public ResponseEntity<String> info() {
@@ -123,8 +135,39 @@ public class SampleRestController {
         return intent;
     }
 
+    //edits by adding a new member to node children
+    @RequestMapping(method = RequestMethod.POST, value = "/tokstem")
+    public String classify (@RequestBody ClassifyInput sentence) {
+
+        return Arrays.toString(classifierService.tokenizeAndStem(sentence.getSentence()));
+    }
 
 
+    //edits by adding a new member to node children
+    @RequestMapping(method = RequestMethod.POST, value = "/corpus")
+    public String corpus (@RequestBody List<ClassificationInputIntent> intents ) {
+
+        return classifierService.corpusWords(intents).toString();
+    }
+
+
+    @RequestMapping(method = RequestMethod.POST, value = "/classes")
+    public String classesList (@RequestBody List<ClassificationInputIntent> intents ) {
+
+        return classifierService.stemmedIntents(intents).toString();
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/classesproc")
+    public String processedClassesList (@RequestBody List<ClassificationInputIntent> intents ) {
+
+        return classifierService.processedIntents(intents).toString();
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/classify")
+    public String classify (@RequestBody ClassificationQuery query) {
+
+        return classifierService.classify(query.getSentence(),query.getIntents()).toString();
+    }
 
     //edits by adding a new member to node children
     @RequestMapping(method = RequestMethod.GET, value = "/delete/{id}")

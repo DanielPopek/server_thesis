@@ -101,6 +101,7 @@ public class IntentMappingService implements IIntentMappingService {
         {
             for (String value:trainingSamples
                     ) {
+                System.out.println(value);
                 Trainingsample sample=new Trainingsample();
                 sample.setIntentByIntentId(intent);
                 sample.setValue(value);

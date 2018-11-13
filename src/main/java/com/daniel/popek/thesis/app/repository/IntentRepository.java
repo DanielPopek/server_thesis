@@ -23,6 +23,8 @@ public interface IntentRepository  extends CrudRepository<Intent, Integer> {
 
     Intent findById(int id);
 
+    Intent findByHash(String hash);
+
     Intent deleteIntentById(int id);
 
     List<Intent> findByConversationByConversationIdAndRootIsTrue(Conversation conversation);
