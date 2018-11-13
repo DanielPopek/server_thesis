@@ -8,6 +8,7 @@ public class IntentDTO {
     private List<String> answerSamples;
     private List<String> trainingSamples;
     private List<String> events;
+    private List<String> misunderstandingStatements;
 
     public String getName() {
         return name;
@@ -47,5 +48,14 @@ public class IntentDTO {
 
     public void setEvents(List<String> events) {
         this.events = events;
+    }
+
+
+    public List<String> getMisunderstandingStatements() {
+        return misunderstandingStatements;
+    }
+
+    public void setMisunderstandingStatements(List<String> misunderstandingStatements) {
+        this.misunderstandingStatements = misunderstandingStatements;
     }
 }

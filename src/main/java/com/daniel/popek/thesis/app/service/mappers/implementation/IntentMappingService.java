@@ -33,6 +33,7 @@ public class IntentMappingService implements IIntentMappingService {
         dto.setEvents(mapEventEntitiesToDTOs(intent.getEventByEventId()));
         dto.setTrainingSamples(mapTrainingSampleEntitiesToDTOs(intent.getTrainingsamplesById()));
         dto.setAnswerSamples(mapAnswerEntitiesToDTOs(intent.getAnswersamplesById()));
+        dto.setMisunderstandingStatements(mapMisunderstandingsEntitiesToDTOs(intent.getMisunderstandingStatementsById()));
         List<IntentDTO> subintents= new ArrayList<>();
         for (Intent subintent:intent.getIntentsById()
              ) {
@@ -51,6 +52,7 @@ public class IntentMappingService implements IIntentMappingService {
         intent.setEventByEventId(mapEventsToEntities(dto.getEvents(),intent));
         intent.setAnswersamplesById(mapAnswersToEntities(dto.getAnswerSamples(),intent));
         intent.setTrainingsamplesById(mapTrainingSamplesToEntities(dto.getTrainingSamples(),intent));
+        intent.setMisunderstandingStatementsById(mapMisunderstandingsDTOsToEntities(dto.getMisunderstandingStatements(),intent));
         intent.setIntentByIntentId(parentIntent);
         List<Intent> children= new ArrayList<>();
         if(dto.getSubintents()!=null)
@@ -64,6 +66,34 @@ public class IntentMappingService implements IIntentMappingService {
         return intent;
     }
 
+
+    private List<MisunderstandingStatement> mapMisunderstandingsDTOsToEntities(List<String> misunderstandings, Intent intent)
+    {
+        List<MisunderstandingStatement> misunderstandingList=new ArrayList<>();
+        if(misunderstandings!=null) {
+            for (String misunderstanding : misunderstandings
+                    ) {
+                MisunderstandingStatement sample = new MisunderstandingStatement();
+                sample.setIntentByIntentId(intent);
+                sample.setValue(misunderstanding);
+                misunderstandingList.add(sample);
+            }
+        }
+        return misunderstandingList;
+    }
+
+    private List<String> mapMisunderstandingsEntitiesToDTOs(Collection<MisunderstandingStatement> misunderstandings)
+    {
+        List<String> answersList=new ArrayList<>();
+        if(misunderstandings!=null)
+        {
+            for (MisunderstandingStatement sample:misunderstandings
+                    ) {
+                answersList.add(sample.getValue());
+            }
+        }
+        return answersList;
+    }
 
 
     private List<Answersample> mapAnswersToEntities(List<String> answers, Intent intent)

@@ -30,9 +30,9 @@ public class ApplicationService implements IApplicationService {
     public void saveApplication(ApplicationDTO dto) {
         Application entity=applicationMappingService.mapApplicationDTOtoEntity(dto);
         entity.setDesignerId(1);
-        entity.setActive(true);
         entity.setToken(hashingService.createHash(entity));
-        entity.setDate(Timestamp.valueOf(LocalDateTime.now()));
+        entity.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()));
+        entity.setLastModificationDate(Timestamp.valueOf(LocalDateTime.now()));
         applicationRepository.save(entity);
     }
 

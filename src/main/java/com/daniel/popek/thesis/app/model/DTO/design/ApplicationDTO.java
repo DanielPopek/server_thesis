@@ -6,7 +6,6 @@ public class ApplicationDTO {
     private String description;
     private String token;
     private String date;
-    private Boolean active;
 
 
     public String getName() {
@@ -41,11 +40,4 @@ public class ApplicationDTO {
         this.date = date;
     }
 
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
 }

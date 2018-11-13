@@ -11,8 +11,8 @@ public class Designer {
     private String password;
     private String salt;
     private Boolean active;
-    private Boolean deleted;
     private Date registrationDate;
+    private String activationCode;
 
     @Id
     @Column(name = "id")
@@ -56,6 +56,16 @@ public class Designer {
     }
 
     @Basic
+    @Column(name = "activation_code")
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
+
+    @Basic
     @Column(name = "active")
     public Boolean getActive() {
         return active;
@@ -65,15 +75,6 @@ public class Designer {
         this.active = active;
     }
 
-    @Basic
-    @Column(name = "deleted")
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
 
     @Basic
     @Column(name = "registration_date")
@@ -95,13 +96,12 @@ public class Designer {
                 Objects.equals(password, designer.password) &&
                 Objects.equals(salt, designer.salt) &&
                 Objects.equals(active, designer.active) &&
-                Objects.equals(deleted, designer.deleted) &&
                 Objects.equals(registrationDate, designer.registrationDate);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, email, password, salt, active, deleted, registrationDate);
+        return Objects.hash(id, email, password, salt, active, registrationDate);
     }
 }

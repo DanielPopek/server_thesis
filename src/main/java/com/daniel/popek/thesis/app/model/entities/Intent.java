@@ -20,6 +20,7 @@ public class Intent {
    // private Event eventByEventId;
     private Conversation conversationByConversationId;
     private Collection<Trainingsample> trainingsamplesById;
+    private Collection<MisunderstandingStatement> misunderstandingStatementsById;
 
     @Id
     @Column(name = "id")
@@ -83,8 +84,18 @@ public class Intent {
         return answersamplesById;
     }
 
+
     public void setAnswersamplesById(Collection<Answersample> answersamplesById) {
         this.answersamplesById = answersamplesById;
+    }
+
+    @OneToMany(mappedBy = "intentByIntentId",cascade = {CascadeType.PERSIST,CascadeType.REFRESH,CascadeType.DETACH,CascadeType.REMOVE})
+    public Collection<MisunderstandingStatement> getMisunderstandingStatementsById() {
+        return misunderstandingStatementsById;
+    }
+
+    public void setMisunderstandingStatementsById(Collection<MisunderstandingStatement> misunderstandingStatementsById) {
+        this.misunderstandingStatementsById = misunderstandingStatementsById;
     }
 
     @JsonIgnore

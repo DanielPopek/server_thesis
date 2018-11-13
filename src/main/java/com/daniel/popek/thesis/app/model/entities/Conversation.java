@@ -1,6 +1,7 @@
 package com.daniel.popek.thesis.app.model.entities;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
@@ -10,6 +11,8 @@ public class Conversation {
     private String name;
     private Integer designerId;
     private String description;
+    private Timestamp registrationDate;
+    private Timestamp lastModificationDate;
 
     @Id
     @Column(name = "id")
@@ -52,6 +55,25 @@ public class Conversation {
         this.designerId = designer_id;
     }
 
+    @Basic
+    @Column(name = "registration_date")
+    public Timestamp getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Timestamp registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    @Basic
+    @Column(name = "last_modification_date")
+    public Timestamp getLastModificationDate() {
+        return lastModificationDate;
+    }
+
+    public void setLastModificationDate(Timestamp lastModificationDate) {
+        this.lastModificationDate = lastModificationDate;
+    }
 
     @Basic
     @Column(name = "description")
@@ -77,6 +99,5 @@ public class Conversation {
 
         return Objects.hash(id, hash);
     }
-
 
 }

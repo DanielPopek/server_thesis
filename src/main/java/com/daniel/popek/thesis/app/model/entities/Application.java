@@ -9,9 +9,9 @@ public class Application {
     private Integer id;
     private String name;
     private String description;
-    private Boolean active=true;
     private Integer designerId;
     private Timestamp registrationDate;
+    private Timestamp lastModificationDate;
     private String token;
 
     @Id
@@ -55,25 +55,22 @@ public class Application {
         this.description = description;
     }
 
+
     @Basic
     @Column(name = "registration_date")
-    public Timestamp getDate() {
+    public Timestamp getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setDate(Timestamp date) {
-        this.registrationDate = date;
+    public void setRegistrationDate(Timestamp registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
     @Basic
-    @Column(name = "active")
-    public Boolean getActive() {
-        return active;
-    }
+    @Column(name = "last_modification_date")
+    public Timestamp getLastModificationDate() { return lastModificationDate; }
 
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+    public void setLastModificationDate(Timestamp lastModificationDate) { this.lastModificationDate = lastModificationDate; }
 
     @Basic
     @Column(name = "token")
@@ -99,4 +96,6 @@ public class Application {
 
         return Objects.hash(id, name);
     }
+
+
 }

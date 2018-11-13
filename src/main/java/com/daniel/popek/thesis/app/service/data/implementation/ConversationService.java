@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,6 +96,8 @@ public class ConversationService implements IConversationService{
         conversation.setHash(hashingService.createHash(conversation));
         conversation.setName(conversationDTO.getName());
         conversation.setDescription(conversationDTO.getDescription());
+        conversation.setLastModificationDate(Timestamp.valueOf(LocalDateTime.now()));
+        conversation.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()));
         conversation.setDesignerId(1);
         conversation=conversationRepository.save(conversation);
         IntentDTO root= new IntentDTO();

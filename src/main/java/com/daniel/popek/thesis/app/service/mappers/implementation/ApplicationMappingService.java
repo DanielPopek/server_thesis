@@ -25,8 +25,7 @@ public class ApplicationMappingService implements IApplicationMappingService {
         dto.setName(entity.getName());
         dto.setDescription(entity.getDescription());
         dto.setToken(entity.getToken());
-        dto.setDate(entity.getDate().toLocalDateTime().toString());
-        dto.setActive(entity.getActive());
+        dto.setDate(entity.getRegistrationDate().toLocalDateTime().toString());
         return dto;
     }
 }
