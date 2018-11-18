@@ -2,6 +2,7 @@ package com.daniel.popek.thesis.app.model.entities;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -13,6 +14,7 @@ public class Application {
     private Timestamp registrationDate;
     private Timestamp lastModificationDate;
     private String token;
+//    private Collection<ApplicationConversation> applicationConversationsById;
 
     @Id
     @Column(name = "id")
@@ -81,6 +83,15 @@ public class Application {
     public void setToken(String token) {
         this.token = token;
     }
+
+//    @OneToMany(mappedBy = "applicationId")
+//    public Collection<ApplicationConversation> getApplicationConversationsById() {
+//        return applicationConversationsById;
+//    }
+//
+//    public void setApplicationConversationsById(Collection<ApplicationConversation> applicationConversationsById) {
+//        this.applicationConversationsById = applicationConversationsById;
+//    }
 
     @Override
     public boolean equals(Object o) {

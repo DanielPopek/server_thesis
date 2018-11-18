@@ -13,6 +13,7 @@ public class Designer {
     private Boolean active;
     private Date registrationDate;
     private String activationCode;
+    private String apiKey;
 
     @Id
     @Column(name = "id")
@@ -34,6 +35,12 @@ public class Designer {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Basic
+    @Column(name = "api_key")
+    public String getApiKey() { return apiKey; }
+
+    public void setApiKey(String apiKey) { this.apiKey = apiKey; }
 
     @Basic
     @Column(name = "password")
@@ -104,4 +111,6 @@ public class Designer {
 
         return Objects.hash(id, email, password, salt, active, registrationDate);
     }
+
+
 }

@@ -4,8 +4,8 @@ import com.daniel.popek.thesis.app.model.DTO.design.ConversationDTO;
 import com.daniel.popek.thesis.app.model.DTO.design.ConversationListDTO;
 import com.daniel.popek.thesis.app.model.DTO.design.IntentDTO;
 import com.daniel.popek.thesis.app.model.entities.Conversation;
-import com.daniel.popek.thesis.app.model.entities.Intent;
 import com.daniel.popek.thesis.app.repository.ConversationRepository;
+import com.daniel.popek.thesis.app.repository.ApplicationConversationRepository;
 import com.daniel.popek.thesis.app.service.data.IConversationService;
 import com.daniel.popek.thesis.app.service.data.IIntentService;
 import com.daniel.popek.thesis.app.service.mappers.implementation.ConversationMappingService;
@@ -34,6 +34,9 @@ public class ConversationService implements IConversationService{
 
     @Autowired
     IHashingService hashingService;
+
+    @Autowired
+    ApplicationConversationRepository applicationConversationRepository;
 
 
     @Override
@@ -82,6 +85,7 @@ public class ConversationService implements IConversationService{
         Conversation conversationEntity=conversationRepository.findByHash(hash);
         if(conversationEntity!=null)
         {
+            applicationConversationRepository.deleteAllByConversationId(conversationEntity.getId());
             intentService.deleteRootIntentByConversation(conversationEntity);
             conversationRepository.delete(conversationEntity);
         }

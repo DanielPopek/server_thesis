@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ICommunicationMappingService {
 
-     ClassificationQuery mapContextToQuery(ContextDTO context);
+     ClassificationQuery mapContextToQuery(ContextDTO context, String conversationHash);
 
-     ContextDTO mapClassificationResultToContext(ClassificationResult result, String conversationHash, String chosenResponse, String chosenEvent, Object inputData);
+     ContextDTO mapClassificationResultToContext(ClassificationResult result, String chosenResponse, String chosenEvent, Object inputData);
 }

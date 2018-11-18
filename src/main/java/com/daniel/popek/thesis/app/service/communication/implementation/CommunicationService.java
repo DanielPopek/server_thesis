@@ -29,11 +29,11 @@ public class CommunicationService implements ICommunicationService {
     IIntentService intentService;
 
     @Override
-    public ContextDTO respond(ContextDTO context) {
+    public ContextDTO respond(ContextDTO context, String conversationHash) {
         Random random = new Random();
-        ClassificationQuery query=communicationMappingService.mapContextToQuery(context);
+        ClassificationQuery query=communicationMappingService.mapContextToQuery(context,conversationHash);
         ClassificationResult result=classifierService.classify(context.getMessage(),query.getIntents());
-        Intent intent=intentService.getIntentOrRootByHash(result.getIntentHash(),context.getConversationHash());
+        Intent intent=intentService.getIntentOrRootByHash(result.getIntentHash(),conversationHash);
         String answer="";
         if(intent.getAnswersamplesById().size()!=0)
         {
@@ -48,8 +48,8 @@ public class CommunicationService implements ICommunicationService {
         }
         if(intent.getIntentsById()==null||intent.getIntentsById().size()==0)
             result.setIntentHash("");
-        ContextDTO response=communicationMappingService.mapClassificationResultToContext(result,context.getConversationHash()
-                ,answer,event,context.getData());
+        ContextDTO response=communicationMappingService.mapClassificationResultToContext(result,answer,
+                event,context.getData());
         return response;
     }
 }

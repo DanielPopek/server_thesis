@@ -21,8 +21,8 @@ public class CommunicationMappingService implements ICommunicationMappingService
     IIntentService intentService;
 
     @Override
-    public ClassificationQuery mapContextToQuery(ContextDTO context) {
-        Intent baseIntent=intentService.getIntentOrRootByHash(context.getIntentHash(),context.getConversationHash());
+    public ClassificationQuery mapContextToQuery(ContextDTO context, String conversationHash) {
+        Intent baseIntent=intentService.getIntentOrRootByHash(context.getIntentHash(),conversationHash);
         ClassificationQuery query= new ClassificationQuery();
         query.setSentence(context.getMessage());
         query.setIntents(new ArrayList<>());
@@ -43,13 +43,12 @@ public class CommunicationMappingService implements ICommunicationMappingService
     }
 
     @Override
-    public ContextDTO mapClassificationResultToContext(ClassificationResult result,String conversationHash, String chosenResponse, String chosenEvent,Object inputData) {
+    public ContextDTO mapClassificationResultToContext(ClassificationResult result, String chosenResponse, String chosenEvent,Object inputData) {
         ContextDTO context = new ContextDTO();
         context.setEvent(chosenEvent);
         context.setMessage(chosenResponse);
         context.setData(inputData);
         context.setIntentHash(result.getIntentHash());
-        context.setConversationHash(conversationHash);
         return context;
     }
 }

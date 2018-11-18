@@ -4,7 +4,7 @@ import com.daniel.popek.thesis.app.component.constant.enums.ContextSuccessCodeEn
 
 public class ContextDTO {
 
-    private String conversationHash;
+//    private String conversationHash;
     private String intentHash;
     private String message;
     private String event;
@@ -35,13 +35,13 @@ public class ContextDTO {
         this.data = data;
     }
 
-    public String getConversationHash() {
-        return conversationHash;
-    }
-
-    public void setConversationHash(String conversationHash) {
-        this.conversationHash = conversationHash;
-    }
+//    public String getConversationHash() {
+//        return conversationHash;
+//    }
+//
+//    public void setConversationHash(String conversationHash) {
+//        this.conversationHash = conversationHash;
+//    }
 
     public String getIntentHash() {
         return intentHash;

@@ -1,11 +1,10 @@
 package com.daniel.popek.thesis.app.controller;
 
-import com.daniel.popek.thesis.app.model.DTO.design.ApplicationDTO;
-import com.daniel.popek.thesis.app.model.DTO.design.ConversationDTO;
-import com.daniel.popek.thesis.app.model.DTO.design.ConversationListDTO;
-import com.daniel.popek.thesis.app.model.DTO.design.IntentDTO;
+import com.daniel.popek.thesis.app.model.DTO.comunication.ContextDTO;
+import com.daniel.popek.thesis.app.model.DTO.design.*;
 import com.daniel.popek.thesis.app.model.entities.Application;
 import com.daniel.popek.thesis.app.repository.ApplicationRepository;
+import com.daniel.popek.thesis.app.service.communication.ICommunicationService;
 import com.daniel.popek.thesis.app.service.data.IApplicationService;
 import com.daniel.popek.thesis.app.service.data.IConversationService;
 import com.daniel.popek.thesis.app.service.data.IIntentService;
@@ -18,6 +17,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
+@RequestMapping("/management")
 public class DesignerAPIController  {
 
     @Autowired
@@ -28,6 +28,14 @@ public class DesignerAPIController  {
 
     @Autowired
     IApplicationService applicationService;
+
+    @Autowired
+    ICommunicationService communicationService;
+
+    @RequestMapping(method = RequestMethod.POST, value = "/context")
+    public ResponseEntity<ContextDTO> classify (@RequestBody WrappedContextDTO context) {
+        return new ResponseEntity<ContextDTO>(communicationService.respond(context.getContext(),context.getConversationHash()), HttpStatus.OK);
+    }
 
     //TODO HANDLE Exceptions
 

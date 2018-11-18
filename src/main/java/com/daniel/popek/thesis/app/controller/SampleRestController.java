@@ -5,16 +5,15 @@ import com.daniel.popek.thesis.app.model.DTO.design.IntentDTO;
 import com.daniel.popek.thesis.app.model.classification.ClassificationInputIntent;
 import com.daniel.popek.thesis.app.model.classification.ClassificationQuery;
 import com.daniel.popek.thesis.app.model.classification.ClassifyInput;
-import com.daniel.popek.thesis.app.model.entities.Answersample;
-import com.daniel.popek.thesis.app.model.entities.Conversation;
-import com.daniel.popek.thesis.app.model.entities.Event;
-import com.daniel.popek.thesis.app.model.entities.Intent;
+import com.daniel.popek.thesis.app.model.entities.*;
 import com.daniel.popek.thesis.app.repository.ConversationRepository;
+import com.daniel.popek.thesis.app.repository.DesignerRepository;
 import com.daniel.popek.thesis.app.repository.IntentRepository;
 import com.daniel.popek.thesis.app.service.data.IConversationService;
 import com.daniel.popek.thesis.app.service.mappers.implementation.IntentMappingService;
 import com.daniel.popek.thesis.app.service.ml_classifier.IClassifierService;
 import com.daniel.popek.thesis.app.service.ml_classifier.ITokenizerService;
+import com.daniel.popek.thesis.app.service.utils.IEmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +25,7 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
+@RequestMapping("/management")
 public class SampleRestController {
 
     @Autowired
@@ -45,6 +45,24 @@ public class SampleRestController {
 
     @Autowired
     IClassifierService classifierService;
+
+    @Autowired
+    IEmailSenderService emailSenderService;
+
+    @Autowired
+    DesignerRepository designerRepository;
+
+    @RequestMapping(method = RequestMethod.POST, value = "/testLogin")
+    public ResponseEntity<Designer> findDesignerByEmail(@RequestParam String email) {
+
+        return new ResponseEntity<Designer>(designerRepository.findByEmail(email), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/testMail")
+    public ResponseEntity<String> testMail() {
+        emailSenderService.sendActivationLinkByEmail(1,"daniel.popek13@gmail.com","code123code");
+        return new ResponseEntity<String>("OKIDOKI", HttpStatus.OK);
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/info")
     public ResponseEntity<String> info() {
