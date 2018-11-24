@@ -11,8 +11,7 @@ import com.daniel.popek.thesis.app.service.mappers.ICommunicationMappingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 @Service
 public class CommunicationMappingService implements ICommunicationMappingService{
@@ -21,34 +20,42 @@ public class CommunicationMappingService implements ICommunicationMappingService
     IIntentService intentService;
 
     @Override
-    public ClassificationQuery mapContextToQuery(ContextDTO context, String conversationHash) {
-        Intent baseIntent=intentService.getIntentOrRootByHash(context.getIntentHash(),conversationHash);
+    public ClassificationQuery mapIntentsToQuery(List<Intent> baseIntents, String message) {
+
         ClassificationQuery query= new ClassificationQuery();
-        query.setSentence(context.getMessage());
+        query.setSentence(message);
         query.setIntents(new ArrayList<>());
-        Collection<Intent> subintents=baseIntent.getIntentsById();
-        for (Intent subintent:subintents
+        Set<String> intentsSet= new TreeSet<>();
+        for (Intent baseIntent:baseIntents
              ) {
-            ClassificationInputIntent inputIntent= new ClassificationInputIntent();
-            inputIntent.setName(subintent.getName());
-            inputIntent.setHash(subintent.getHash());
-            inputIntent.setSentences(new ArrayList<>());
-            for (Trainingsample sample:subintent.getTrainingsamplesById()
-                 ) {
-                inputIntent.getSentences().add(sample.getValue());
+            Collection<Intent> subintents = baseIntent.getIntentsById();
+            for (Intent subintent : subintents
+                    ) {
+                ClassificationInputIntent inputIntent = new ClassificationInputIntent();
+                inputIntent.setName(subintent.getName());
+                inputIntent.setHash(subintent.getHash());
+                inputIntent.setSentences(new ArrayList<>());
+                for (Trainingsample sample : subintent.getTrainingsamplesById()
+                        ) {
+                    inputIntent.getSentences().add(sample.getValue());
+                }
+                if(!intentsSet.contains(inputIntent.getHash()))
+                {
+                    query.getIntents().add(inputIntent);
+                    intentsSet.add(inputIntent.getHash());
+                }
             }
-            query.getIntents().add(inputIntent);
         }
         return query;
     }
 
     @Override
-    public ContextDTO mapClassificationResultToContext(ClassificationResult result, String chosenResponse, String chosenEvent,Object inputData) {
+    public ContextDTO mapClassificationResultToContext(String intentHash, String chosenResponse, List<String> events,Object inputData) {
         ContextDTO context = new ContextDTO();
-        context.setEvent(chosenEvent);
+        context.setEvents(events);
         context.setMessage(chosenResponse);
         context.setData(inputData);
-        context.setIntentHash(result.getIntentHash());
+        context.setIntentHash(intentHash);
         return context;
     }
 }

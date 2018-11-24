@@ -18,4 +18,5 @@ public interface IIntentService {
 
     public Intent getIntentOrRootByHash(String hash,String conversationHash);
 
+    Intent getRootEntityIntentByConversationHash(String hash);
 }

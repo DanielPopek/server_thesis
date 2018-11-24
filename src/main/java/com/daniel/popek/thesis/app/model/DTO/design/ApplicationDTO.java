@@ -10,6 +10,9 @@ public class ApplicationDTO {
     private String date;
     private String lastModificationDate;
     private List<String> conversations;
+    private List<String> hashes;
+    private List<String> designerConversationHashes;
+    private List<String> designerConversationNames;
 
 
     public String getName() {
@@ -58,5 +61,29 @@ public class ApplicationDTO {
 
     public void setLastModificationDate(String lastModificationDate) {
         this.lastModificationDate = lastModificationDate;
+    }
+
+    public List<String> getHashes() {
+        return hashes;
+    }
+
+    public void setHashes(List<String> hashes) {
+        this.hashes = hashes;
+    }
+
+    public List<String> getDesignerConversationHashes() {
+        return designerConversationHashes;
+    }
+
+    public void setDesignerConversationHashes(List<String> designerConversationHashes) {
+        this.designerConversationHashes = designerConversationHashes;
+    }
+
+    public List<String> getDesignerConversationNames() {
+        return designerConversationNames;
+    }
+
+    public void setDesignerConversationNames(List<String> designerConversationNames) {
+        this.designerConversationNames = designerConversationNames;
     }
 }

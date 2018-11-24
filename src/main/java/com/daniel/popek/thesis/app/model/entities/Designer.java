@@ -2,16 +2,20 @@ package com.daniel.popek.thesis.app.model.entities;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 public class Designer {
     private Integer id;
+    private String firstName;
+    private String lastName;
     private String email;
     private String password;
     private String salt;
     private Boolean active;
-    private Date registrationDate;
+    private Timestamp registrationDate;
     private String activationCode;
     private String apiKey;
 
@@ -24,6 +28,26 @@ public class Designer {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "first_name")
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    @Basic
+    @Column(name = "last_name")
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     @Basic
@@ -85,11 +109,11 @@ public class Designer {
 
     @Basic
     @Column(name = "registration_date")
-    public Date getRegistrationDate() {
+    public Timestamp getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate(Date registrationDate) {
+    public void setRegistrationDate(Timestamp registrationDate) {
         this.registrationDate = registrationDate;
     }
 
@@ -111,6 +135,5 @@ public class Designer {
 
         return Objects.hash(id, email, password, salt, active, registrationDate);
     }
-
 
 }

@@ -2,12 +2,13 @@ package com.daniel.popek.thesis.app.model.DTO.comunication;
 
 import com.daniel.popek.thesis.app.component.constant.enums.ContextSuccessCodeEnum;
 
+import java.util.List;
+
 public class ContextDTO {
 
-//    private String conversationHash;
     private String intentHash;
     private String message;
-    private String event;
+    private List<String> events;
     private Object data;
 
 
@@ -19,12 +20,12 @@ public class ContextDTO {
         this.message = message;
     }
 
-    public String getEvent() {
-        return event;
+    public List<String>  getEvents() {
+        return events;
     }
 
-    public void setEvent(String event) {
-        this.event = event;
+    public void setEvents(List<String>  events) {
+        this.events = events;
     }
 
     public Object getData() {
@@ -34,14 +35,6 @@ public class ContextDTO {
     public void setData(Object data) {
         this.data = data;
     }
-
-//    public String getConversationHash() {
-//        return conversationHash;
-//    }
-//
-//    public void setConversationHash(String conversationHash) {
-//        this.conversationHash = conversationHash;
-//    }
 
     public String getIntentHash() {
         return intentHash;

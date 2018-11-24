@@ -2,8 +2,13 @@ package com.daniel.popek.thesis.app.service.data.implementation;
 
 import com.daniel.popek.thesis.app.model.DTO.design.ApplicationDTO;
 import com.daniel.popek.thesis.app.model.entities.Application;
+import com.daniel.popek.thesis.app.model.entities.ApplicationConversation;
+import com.daniel.popek.thesis.app.model.entities.Conversation;
+import com.daniel.popek.thesis.app.model.entities.Designer;
 import com.daniel.popek.thesis.app.repository.ApplicationRepository;
 import com.daniel.popek.thesis.app.repository.ApplicationConversationRepository;
+import com.daniel.popek.thesis.app.repository.ConversationRepository;
+import com.daniel.popek.thesis.app.repository.DesignerRepository;
 import com.daniel.popek.thesis.app.service.data.IApplicationService;
 import com.daniel.popek.thesis.app.service.mappers.IApplicationMappingService;
 import com.daniel.popek.thesis.app.service.utils.IHashingService;
@@ -30,18 +35,33 @@ public class ApplicationService implements IApplicationService {
     ApplicationRepository applicationRepository;
 
     @Autowired
+    ConversationRepository conversationRepository;
+
+    @Autowired
     ApplicationConversationRepository applicationConversationRepository;
+
+    @Autowired
+    DesignerRepository designerRepository;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW,
             rollbackFor = com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException.class)
     @Override
-    public void saveApplication(ApplicationDTO dto) {
+    public void saveApplication(ApplicationDTO dto,String header) {
+        Designer designer=designerRepository.findByApiKey(header);
         Application entity=applicationMappingService.mapApplicationDTOtoEntity(dto);
-        entity.setDesignerId(1);
+        entity.setDesignerId(designer.getId());
         entity.setToken(hashingService.createHash(entity));
         entity.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()));
         entity.setLastModificationDate(Timestamp.valueOf(LocalDateTime.now()));
-        applicationRepository.save(entity);
+        Application savedApplication=applicationRepository.save(entity);
+        for (String conversationHash: dto.getHashes()
+             ) {
+            Conversation conversation=conversationRepository.findByHash(conversationHash);
+            ApplicationConversation applicationConversation= new ApplicationConversation();
+            applicationConversation.setApplicationId(savedApplication.getId());
+            applicationConversation.setConversationId(conversation.getId());
+            applicationConversationRepository.save(applicationConversation);
+        }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW,
@@ -74,8 +94,41 @@ public class ApplicationService implements IApplicationService {
         List<Application> entities=applicationRepository.findAllByDesignerId(id);
         for (Application entity: entities
              ) {
-            dtos.add(applicationMappingService.mapApplicationEntityTODTO(entity));
+            dtos.add(applicationMappingService.mapApplicationEntityTODTO(entity,id));
         }
         return dtos;
+    }
+
+    @Override
+    public List<ApplicationDTO> getAllByDesignerHash(String hash) {
+        List<ApplicationDTO> dtos= new ArrayList<>();
+        Designer designer=designerRepository.findByApiKey(hash);
+        List<Application> entities=applicationRepository.findAllByDesignerId(designer.getId());
+        for (Application entity: entities
+                ) {
+            dtos.add(applicationMappingService.mapApplicationEntityTODTO(entity,designer.getId()));
+        }
+        return dtos;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW,
+            rollbackFor = com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException.class)
+    @Override
+    public void editApplication(ApplicationDTO applicationDTO) {
+        Application entity=applicationRepository.findApplicationByToken(applicationDTO.getToken());
+        entity.setLastModificationDate(Timestamp.valueOf(LocalDateTime.now()));
+        entity.setName(applicationDTO.getName());
+        entity.setDescription(applicationDTO.getDescription());
+        applicationRepository.save(entity);
+        applicationConversationRepository.deleteAllByApplicationId(entity.getId());
+
+        for (String conversationHash: applicationDTO.getHashes()
+                ) {
+            Conversation conversation=conversationRepository.findByHash(conversationHash);
+            ApplicationConversation applicationConversation= new ApplicationConversation();
+            applicationConversation.setApplicationId(entity.getId());
+            applicationConversation.setConversationId(conversation.getId());
+            applicationConversationRepository.save(applicationConversation);
+        }
     }
 }

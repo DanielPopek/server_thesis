@@ -1,4 +1,4 @@
-package com.daniel.popek.thesis.app.service.communication;
+package com.daniel.popek.thesis.app.service.utils;
 
 import org.springframework.stereotype.Service;
 

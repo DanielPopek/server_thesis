@@ -3,6 +3,7 @@ package com.daniel.popek.thesis.app.service.mappers.implementation;
 import com.daniel.popek.thesis.app.model.DTO.design.ApplicationDTO;
 import com.daniel.popek.thesis.app.model.entities.Application;
 import com.daniel.popek.thesis.app.model.entities.ApplicationConversation;
+import com.daniel.popek.thesis.app.model.entities.Conversation;
 import com.daniel.popek.thesis.app.repository.ConversationRepository;
 import com.daniel.popek.thesis.app.repository.ApplicationConversationRepository;
 import com.daniel.popek.thesis.app.service.mappers.IApplicationMappingService;
@@ -31,9 +32,8 @@ public class ApplicationMappingService implements IApplicationMappingService {
     }
 
     //maps in order to display appliction info
-    //TODO requires improvement when OAuth is attached
     @Override
-    public ApplicationDTO mapApplicationEntityTODTO(Application entity) {
+    public ApplicationDTO mapApplicationEntityTODTO(Application entity, int designerId) {
         ApplicationDTO dto= new ApplicationDTO();
         dto.setName(entity.getName());
         dto.setDescription(entity.getDescription());
@@ -45,7 +45,18 @@ public class ApplicationMappingService implements IApplicationMappingService {
              ) {
             conversations.add(conversationRepository.findById(pair.getConversationId()).get().getName());
         }
+        List<String>designerConversationNames=new ArrayList<>();
+        List<String>designerConversationHashes=new ArrayList<>();
+
+        List<Conversation> designerConversations=conversationRepository.findAllByDesignerId(designerId);
+        for (Conversation conv: designerConversations
+             ) {
+            designerConversationHashes.add(conv.getHash());
+            designerConversationNames.add(conv.getName());
+        }
         dto.setConversations(conversations);
+        dto.setDesignerConversationHashes(designerConversationHashes);
+        dto.setDesignerConversationNames(designerConversationNames);
         return dto;
     }
 }

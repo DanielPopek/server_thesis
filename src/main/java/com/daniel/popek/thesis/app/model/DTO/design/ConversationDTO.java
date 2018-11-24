@@ -5,6 +5,8 @@ public class ConversationDTO {
     private String conversationHash;
     private String name;
     private IntentDTO root;
+    private String lastModificationDate;
+    private String creationDate;
 
     public Integer getConversationId() {
         return conversationId;
@@ -36,5 +38,21 @@ public class ConversationDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public String getLastModificationDate() {
+        return lastModificationDate;
+    }
+
+    public void setLastModificationDate(String lastModificationDate) {
+        this.lastModificationDate = lastModificationDate;
     }
 }

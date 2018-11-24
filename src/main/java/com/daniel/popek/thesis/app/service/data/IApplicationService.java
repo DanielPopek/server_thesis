@@ -11,8 +11,12 @@ This service is used to extract/update Application entities from/in database
 @Service
 public interface IApplicationService {
 
-    public void saveApplication(ApplicationDTO dto);
+    public void saveApplication(ApplicationDTO dto,String header);
     public void deleteApplication(ApplicationDTO dto);
     public void deleteApplicationByToken(String token);
     public List<ApplicationDTO> getAllByDesignerId(Integer id);
+
+    List<ApplicationDTO> getAllByDesignerHash(String hash);
+
+    void editApplication(ApplicationDTO applicationDTO);
 }

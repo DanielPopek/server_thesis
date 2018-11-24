@@ -7,6 +7,7 @@ public class ClassificationResult {
     private String intentHash;
     private float score;
     private Map<String,Float> results;
+    private Map<String,Float> resultsHashes;
 
     public String getIntent() {
         return intent;
@@ -43,5 +44,13 @@ public class ClassificationResult {
 
     public void setIntentHash(String intentHash) {
         this.intentHash = intentHash;
+    }
+
+    public void setResultsHashes(Map<String, Float> resultsHashes) {
+        this.resultsHashes = resultsHashes;
+    }
+
+    public Map<String, Float> getResultsHashes() {
+        return resultsHashes;
     }
 }

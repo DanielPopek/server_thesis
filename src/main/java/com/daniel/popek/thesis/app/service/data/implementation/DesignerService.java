@@ -11,6 +11,9 @@ import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 @Service
 public class DesignerService implements IDesignerService {
 
@@ -64,8 +67,10 @@ public class DesignerService implements IDesignerService {
 
         Pair<String, String> password = PasswordUtils.decryptPassword(registerRequestBody.getPassword());
         Designer userToSave = new Designer();
-
         userToSave.setEmail(registerRequestBody.getEmail());
+        userToSave.setFirstName(registerRequestBody.getFirstName());
+        userToSave.setLastName(registerRequestBody.getLastName());
+        userToSave.setRegistrationDate(Timestamp.valueOf(LocalDateTime.now()));
         userToSave.setActive(false);
         userToSave.setApiKey(PasswordUtils.generateAccessToker());
         userToSave.setActivationCode(PasswordUtils.generateActivationCode());

@@ -1,8 +1,7 @@
 package com.daniel.popek.thesis.app.config;
 
 
-import com.daniel.popek.thesis.app.repository.DesignerRepository;
-import com.daniel.popek.thesis.app.service.communication.IAuthenticationFilterService;
+import com.daniel.popek.thesis.app.service.utils.IAuthenticationFilterService;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;

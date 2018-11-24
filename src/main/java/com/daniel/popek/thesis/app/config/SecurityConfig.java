@@ -1,7 +1,7 @@
 package com.daniel.popek.thesis.app.config;
 
 import com.daniel.popek.thesis.app.repository.DesignerRepository;
-import com.daniel.popek.thesis.app.service.communication.IAuthenticationFilterService;
+import com.daniel.popek.thesis.app.service.utils.IAuthenticationFilterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;

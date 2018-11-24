@@ -2,6 +2,7 @@ package com.daniel.popek.thesis.app.service.data;
 
 import com.daniel.popek.thesis.app.model.DTO.design.ConversationDTO;
 import com.daniel.popek.thesis.app.model.DTO.design.ConversationListDTO;
+import com.daniel.popek.thesis.app.model.DTO.design.ConversationNamesHashesDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,10 +19,15 @@ public interface IConversationService {
 
     List<ConversationListDTO> readListConversationsByDeveloperId(Integer id);
 
-    public void saveConversationDTO(ConversationDTO dto);
+    List<ConversationListDTO> readListConversationsByDesignerHash(String hash);
+
+    ConversationNamesHashesDTO readConversationNamesAndHashesByDesignerHash(String hash);
+
+    public void saveConversationDTO(ConversationDTO dto, String header);
 
     public void deleteConversation(String hash);
 
-    public void saveNewConversationDTO(ConversationListDTO conversationDTO);
+    public void saveNewConversationDTO(ConversationListDTO conversationDTO,String header);
 
+    void editConversation(ConversationListDTO conversationDTO);
 }

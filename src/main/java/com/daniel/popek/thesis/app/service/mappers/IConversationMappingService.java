@@ -10,7 +10,7 @@ public interface IConversationMappingService {
 
     public ConversationDTO mapConversationEntityToDTO(Conversation conversation);
 
-    public Conversation mapConversationDTOtoEntity(ConversationDTO dto);
+    public Conversation mapConversationDTOtoEntity(ConversationDTO dto,String apiKey);
 
     ConversationListDTO mapConversationEntityToListDTO(Conversation conversation);
 }

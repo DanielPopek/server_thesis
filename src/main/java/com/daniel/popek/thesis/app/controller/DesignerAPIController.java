@@ -51,6 +51,18 @@ public class DesignerAPIController  {
         return new ResponseEntity<List<ConversationListDTO>>(conversationService.readListConversationsByDeveloperId(id), HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/conversation/designer/hash")
+    public ResponseEntity<List<ConversationListDTO>> getListConversationsByDesignerHash(@RequestHeader(value = "Authorization") String header) {
+
+        return new ResponseEntity<List<ConversationListDTO>>(conversationService.readListConversationsByDesignerHash(header), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/conversation/names")
+    public ResponseEntity<ConversationNamesHashesDTO> getConversationNamesByDesignerHash(@RequestHeader(value = "Authorization") String header) {
+
+        return new ResponseEntity<ConversationNamesHashesDTO>(conversationService.readConversationNamesAndHashesByDesignerHash(header), HttpStatus.OK);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/intent/hash/{hash}")
     public ResponseEntity<IntentDTO> getIntentByConversationHash(@PathVariable String hash) {
 
@@ -65,18 +77,27 @@ public class DesignerAPIController  {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/conversation")
-    public HttpStatus saveConversation(@RequestBody ConversationDTO conversationDTO) {
-        conversationService.saveConversationDTO(conversationDTO);
+    public HttpStatus saveConversationTree(@RequestBody ConversationDTO conversationDTO,@RequestHeader(value = "Authorization") String header ) {
+        conversationService.saveConversationDTO(conversationDTO,header);
 
         return HttpStatus.OK;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/conversation/new")
-    public HttpStatus saveNewConversation(@RequestBody ConversationListDTO conversationDTO) {
-        conversationService.saveNewConversationDTO(conversationDTO);
+    public HttpStatus saveNewConversation(@RequestBody ConversationListDTO conversationDTO,@RequestHeader(value = "Authorization") String header) {
+        conversationService.saveNewConversationDTO(conversationDTO,header);
 
         return HttpStatus.OK;
     }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/conversation/edit")
+    public HttpStatus editConversationData(@RequestBody ConversationListDTO conversationDTO) {
+        conversationService.editConversation(conversationDTO);
+
+        return HttpStatus.OK;
+    }
+
+
 
     @RequestMapping(method = RequestMethod.GET, value = "/application/{designerId}")
     public ResponseEntity<List<ApplicationDTO>> getAllApplicationsOfDesignerById(@PathVariable Integer designerId) {
@@ -84,9 +105,23 @@ public class DesignerAPIController  {
         return new ResponseEntity<List<ApplicationDTO>>(applicationService.getAllByDesignerId(designerId), HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/application/hash")
+    public ResponseEntity<List<ApplicationDTO>> getAllApplicationsOfDesignerByHash(@RequestHeader(value = "Authorization") String header) {
+
+        return new ResponseEntity<List<ApplicationDTO>>(applicationService.getAllByDesignerHash(header), HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/application")
+    public HttpStatus saveNewAppication(@RequestBody ApplicationDTO applicationDTO,@RequestHeader(value = "Authorization") String header) {
+
+        applicationService.saveApplication(applicationDTO,header);
+
+        return HttpStatus.OK;
+    }
+
     @RequestMapping(method = RequestMethod.POST, value = "/application")
-    public HttpStatus saveNewAppication(@RequestBody ApplicationDTO applicationDTO) {
-        applicationService.saveApplication(applicationDTO);
+    public HttpStatus editAppication(@RequestBody ApplicationDTO applicationDTO) {
+        applicationService.editApplication(applicationDTO);
 
         return HttpStatus.OK;
     }

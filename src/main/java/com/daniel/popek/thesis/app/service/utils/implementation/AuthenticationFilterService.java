@@ -1,4 +1,4 @@
-package com.daniel.popek.thesis.app.service.communication.implementation;
+package com.daniel.popek.thesis.app.service.utils.implementation;
 
 import com.daniel.popek.thesis.app.model.entities.Application;
 import com.daniel.popek.thesis.app.model.entities.Conversation;
@@ -6,7 +6,7 @@ import com.daniel.popek.thesis.app.repository.ApplicationConversationRepository;
 import com.daniel.popek.thesis.app.repository.ApplicationRepository;
 import com.daniel.popek.thesis.app.repository.ConversationRepository;
 import com.daniel.popek.thesis.app.repository.DesignerRepository;
-import com.daniel.popek.thesis.app.service.communication.IAuthenticationFilterService;
+import com.daniel.popek.thesis.app.service.utils.IAuthenticationFilterService;
 import com.daniel.popek.thesis.app.service.utils.IHeaderTokenService;
 import org.assertj.core.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;

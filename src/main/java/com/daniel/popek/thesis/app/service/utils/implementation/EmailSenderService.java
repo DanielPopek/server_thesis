@@ -1,6 +1,6 @@
 package com.daniel.popek.thesis.app.service.utils.implementation;
 
-import com.daniel.popek.thesis.app.component.constant.Constants;
+import com.daniel.popek.thesis.app.component.Constants;
 import com.daniel.popek.thesis.app.service.utils.IEmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;

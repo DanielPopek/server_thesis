@@ -57,16 +57,14 @@ public class IntentService  implements IIntentService{
         }
         else
             intent=intentRepository.findByHash(hash);
-//        {
-//            intent=intentRepository.findByHash(hash);
-//            if(intent.getIntentsById()==null||intent.getIntentsById().size()==0)
-//            {
-//                Conversation conversation=conversationRepository.findByHash(conversationHash);
-//                intent=intentRepository.findByConversationByConversationIdAndRootIsTrue(conversation).get(0);
-//            }
-//        }
 
         return intent;
+    }
+
+    @Override
+    public Intent getRootEntityIntentByConversationHash(String hash) {
+        Conversation conversation=conversationRepository.findByHash(hash);
+        return intentRepository.findByConversationByConversationIdAndRootIsTrue(conversation).get(0);
     }
 
 

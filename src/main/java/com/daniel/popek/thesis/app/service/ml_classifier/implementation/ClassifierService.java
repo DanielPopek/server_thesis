@@ -40,6 +40,7 @@ public class ClassifierService implements IClassifierService{
         result.setScore(-1);
         result.setIntent("initial");
         result.setResults(new HashMap<>());
+        result.setResultsHashes(new HashMap<>());
         //initial printouts
         System.out.println(corpusWords.toString());
         String featuresString = features.stream().map(Object::toString)
@@ -53,27 +54,33 @@ public class ClassifierService implements IClassifierService{
              ) {
             //double probabilty=intentClass.getClassProbability();
             double probabilty=1;
+            int matchesCount=0;
             for (String feature: features
                  ) {
                 double featureProbability=1.0;
                 double frequenciesSum=1;
                 for (Map<String,Float> sentenceFreqencies:intentClass.getRowFrequencies()
                      ) {
-                    if(sentenceFreqencies.containsKey(feature))frequenciesSum+=sentenceFreqencies.get(feature);
+                    if(sentenceFreqencies.containsKey(feature)){
+                        frequenciesSum+=sentenceFreqencies.get(feature);
+                        matchesCount++;
+                    }
                 }
                 featureProbability+=frequenciesSum;
                 featureProbability=featureProbability/(grammarSize+intentClass.getRowFrequencies().size());
                 probabilty*=featureProbability;
             }
+            if(matchesCount==0)probabilty=0;
             if(probabilty>result.getScore()){
                 result.setScore((float)probabilty);
                 result.setIntent(intentClass.getName());
                 result.setIntentHash(intentClass.getHash());
             }
             result.getResults().put(intentClass.getName(),(float)probabilty);
+            result.getResultsHashes().put(intentClass.getHash(),(float)probabilty);
         }
 
-        System.out.println("RES"+result);
+        System.out.println("CLASSIFICATION RESULT: "+result);
         return result;
     }
 
@@ -195,6 +202,7 @@ public class ClassifierService implements IClassifierService{
         String[] tokens=tokenizerService.tokenize(sentence);
        for(int i=0;i<tokens.length;i++)
        {
+           if(!tokens[i].isEmpty())
            tokens[i]=stemmerService.stem(tokens[i]);
        }
        return tokens;

@@ -8,5 +8,5 @@ import org.springframework.stereotype.Service;
 public interface IApplicationMappingService {
 
     public Application mapApplicationDTOtoEntity(ApplicationDTO dto);
-    public ApplicationDTO mapApplicationEntityTODTO(Application entity);
+    public ApplicationDTO mapApplicationEntityTODTO(Application entity, int designerId);
 }

@@ -95,6 +95,7 @@ def remove_verbs_ends(word):
         String[] endings2= new String[]{"esz", "asz", "eść", "aść", "eć", "ać"};
         String[] endings3= new String[]{"aj"};
         String[] endings4= new String[]{"ać", "em", "am", "ał", "ił", "ić", "ąc"};
+
         if(word.length()>5&&word.endsWith("bym"))
             return word.substring(0,word.length()-3);
         if(word.length()>5&&Arrays.asList(endings1).contains(word.substring(word.length()-3)))
