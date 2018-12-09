@@ -47,7 +47,7 @@ public class ConversationService implements IConversationService{
 
     @Override
     public ConversationDTO readConversationById(int id) {
-        return conversationMappingService.mapConversationEntityToDTO(conversationRepository.findById(id));
+        return conversationMappingService.mapConversationEntityToDTO(conversationRepository.findById(id).get());
     }
 
     @Override

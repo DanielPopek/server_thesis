@@ -4,6 +4,7 @@ import com.daniel.popek.thesis.app.persistence.repository.DesignerRepository;
 import com.daniel.popek.thesis.app.domain.service.utils.IAuthenticationFilterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SecurityConfig {
 
+    @Profile("!SECURITY_MOCK")
     @Configuration
     public static class FrontendConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -36,6 +38,7 @@ public class SecurityConfig {
         }
     }
 
+    @Profile("!SECURITY_MOCK")
     @Order(1)
     @Configuration
     public static class ApiConfiguration extends WebSecurityConfigurerAdapter {
@@ -59,5 +62,19 @@ public class SecurityConfig {
         public void configure(WebSecurity web) throws Exception {
             super.configure(web);
         }
+    }
+
+    @Profile("SECURITY_MOCK")
+    @Configuration
+    public static class TestConfiguration extends WebSecurityConfigurerAdapter {
+
+
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.authorizeRequests()
+                    .antMatchers("/api/**")
+                    .permitAll();
+        }
+
     }
 }

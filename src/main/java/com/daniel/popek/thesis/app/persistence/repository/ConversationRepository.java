@@ -12,7 +12,7 @@ public interface ConversationRepository  extends CrudRepository<Conversation, In
     @Override
     Conversation save(Conversation conversation);
 
-    Conversation findById(int id);
+//    Conversation findById(int id);
 
     Conversation findByHash( String hash);
 

@@ -25,6 +25,16 @@ public class CommunicationController {
         return new ResponseEntity<ContextDTO>(communicationService.respond(context,headerTokenService.extractConversationTokenFromHeader(header)), HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/test/{name}")
+    public ResponseEntity<String> testEndpoint (@PathVariable String name) {
+        return new ResponseEntity<String>(name,HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/test2/{name}")
+    public ResponseEntity<String> testEndpointHeader (@RequestHeader(value = "Authorization") String header,@PathVariable String name) {
+        return new ResponseEntity<String>(header,HttpStatus.OK);
+    }
+
 
 
 }
