@@ -12,6 +12,8 @@ import com.daniel.popek.thesis.app.domain.service.utils.IHashingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+
 @Service
 public class ConversationMappingService implements IConversationMappingService {
 
@@ -34,8 +36,8 @@ public class ConversationMappingService implements IConversationMappingService {
         dto.setConversationId(conversation.getId());
         dto.setConversationHash(conversation.getHash());
         dto.setName(conversation.getName());
-        dto.setLastModificationDate(conversation.getLastModificationDate().toString());
-        dto.setCreationDate(conversation.getRegistrationDate().toString());
+        dto.setLastModificationDate(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(conversation.getLastModificationDate()));
+        dto.setCreationDate(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(conversation.getRegistrationDate()));
         try{
             dto.setRoot(intentMappingService.mapIntentEntityToDTO(intentRepository.findByConversationByConversationIdAndRootIsTrue(conversation).get(0)));
         }catch (Exception ex)
@@ -62,8 +64,8 @@ public class ConversationMappingService implements IConversationMappingService {
         dto.setConversationHash(conversation.getHash());
         dto.setName(conversation.getName());
         dto.setDescription(conversation.getDescription());
-        dto.setLastModificationDate((conversation.getLastModificationDate()==null?"":conversation.getLastModificationDate().toString()));
-        dto.setCreationDate(conversation.getRegistrationDate()==null?"":conversation.getRegistrationDate().toString());
+        dto.setLastModificationDate((conversation.getLastModificationDate()==null?"":new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(conversation.getLastModificationDate())));
+        dto.setCreationDate(conversation.getRegistrationDate()==null?"":new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(conversation.getRegistrationDate()));
         return dto;
     }
 

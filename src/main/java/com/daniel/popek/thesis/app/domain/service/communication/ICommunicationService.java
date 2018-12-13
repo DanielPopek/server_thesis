@@ -6,5 +6,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ICommunicationService {
 
-    ContextDTO respond(ContextDTO context, String conversationHash);
+    ContextDTO respond(ContextDTO context, String conversationHash) throws Exception;
 }

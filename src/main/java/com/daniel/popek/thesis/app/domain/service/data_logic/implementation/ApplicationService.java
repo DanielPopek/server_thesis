@@ -100,7 +100,7 @@ public class ApplicationService implements IApplicationService {
     }
 
     @Override
-    public List<ApplicationDTO> getAllByDesignerHash(String hash) {
+    public List<ApplicationDTO> getAllByDesignerHash(String hash) throws Exception{
         List<ApplicationDTO> dtos= new ArrayList<>();
         Designer designer=designerRepository.findByApiKey(hash);
         List<Application> entities=applicationRepository.findAllByDesignerId(designer.getId());

@@ -24,7 +24,6 @@ public class ClassifierService implements IClassifierService{
 
     @Override
     public ClassificationResult classify(String sentence, List<ClassificationInputIntent> intents) {
-        //return classifySimple(sentence,intents);
         //features initialization
         List<String> features=new ArrayList<>();
         String[] sentenceTokens=tokenizeAndStem(sentence);

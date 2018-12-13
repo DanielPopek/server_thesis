@@ -32,18 +32,6 @@ public class AuthenticationFilterManagment extends GenericFilterBean {
         httpServletResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         httpServletResponse.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, No-Auth, Accept, X-Requested-With, remember-me");
 
-//        if(httpServletRequest.getHeader("Authorization") == null||httpServletRequest.getHeader("Authorization") != null && repository.findByApiKey(httpServletRequest.getHeader("Authorization"))==null){
-//            httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "UNAUTHORIZED");
-//        }else{
-//            filterChain.doFilter(servletRequest, servletResponse);
-//        }
-
-//        if(authenticationFilterService.menagementHeaderIsUnauthorized(httpServletRequest.getHeader("Authorization"))){
-//            httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "UNAUTHORIZED");
-//        }else{
-//            filterChain.doFilter(servletRequest, servletResponse);
-//        }
-
         filterChain.doFilter(servletRequest, servletResponse);
     }
 }

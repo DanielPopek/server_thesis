@@ -17,7 +17,6 @@ public class AuthenticationFilterAPI extends GenericFilterBean {
 
     private IAuthenticationFilterService authenticationFilterService;
 
-
     AuthenticationFilterAPI(IAuthenticationFilterService service)
     {
         this.authenticationFilterService=service;

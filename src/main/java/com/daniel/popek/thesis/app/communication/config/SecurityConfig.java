@@ -13,11 +13,10 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.stereotype.Component;
 
 
-//@Configuration
 @Component
 public class SecurityConfig {
 
-    @Profile("!SECURITY_MOCK")
+    @Profile("!TEST_SECURITY_MOCK")
     @Configuration
     public static class FrontendConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -38,7 +37,7 @@ public class SecurityConfig {
         }
     }
 
-    @Profile("!SECURITY_MOCK")
+    @Profile("!TEST_SECURITY_MOCK")
     @Order(1)
     @Configuration
     public static class ApiConfiguration extends WebSecurityConfigurerAdapter {
@@ -55,7 +54,6 @@ public class SecurityConfig {
                     .antMatcher("/api/**")
                     .addFilterBefore(
                             new AuthenticationFilterAPI(authenticationFilterService), BasicAuthenticationFilter.class).csrf().disable();
-
         }
 
         @Override
@@ -64,17 +62,20 @@ public class SecurityConfig {
         }
     }
 
-    @Profile("SECURITY_MOCK")
+    @Profile("TEST_SECURITY_MOCK")
     @Configuration
     public static class TestConfiguration extends WebSecurityConfigurerAdapter {
 
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.authorizeRequests()
-                    .antMatchers("/api/**")
-                    .permitAll();
         }
 
+        @Override
+        public void configure(WebSecurity web) throws Exception {
+            web.ignoring()
+                    .antMatchers("/api/**")
+                    .antMatchers("/management/**");
+        }
     }
 }

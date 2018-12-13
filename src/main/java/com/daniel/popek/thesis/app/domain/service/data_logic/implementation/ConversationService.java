@@ -51,7 +51,7 @@ public class ConversationService implements IConversationService{
     }
 
     @Override
-    public ConversationDTO readConversationByHash(String hash) {
+    public ConversationDTO readConversationByHash(String hash) throws Exception{
         return conversationMappingService.mapConversationEntityToDTO(conversationRepository.findByHash(hash));
     }
 

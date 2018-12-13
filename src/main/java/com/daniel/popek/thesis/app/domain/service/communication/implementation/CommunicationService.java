@@ -34,7 +34,7 @@ public class CommunicationService implements ICommunicationService {
     IIntentService intentService;
 
     @Override
-    public ContextDTO respond(ContextDTO context, String conversationHash) {
+    public ContextDTO respond(ContextDTO context, String conversationHash) throws Exception {
 
 
         //preparing set of potencial base intents

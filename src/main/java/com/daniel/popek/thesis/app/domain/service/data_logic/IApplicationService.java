@@ -16,7 +16,7 @@ public interface IApplicationService {
     public void deleteApplicationByToken(String token);
     public List<ApplicationDTO> getAllByDesignerId(Integer id);
 
-    List<ApplicationDTO> getAllByDesignerHash(String hash);
+    List<ApplicationDTO> getAllByDesignerHash(String hash)throws Exception;
 
     void editApplication(ApplicationDTO applicationDTO);
 }

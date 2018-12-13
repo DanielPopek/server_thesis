@@ -15,7 +15,7 @@ public interface IConversationService {
 
     public ConversationDTO readConversationById(int id);
 
-    public ConversationDTO readConversationByHash(String hash);
+    public ConversationDTO readConversationByHash(String hash) throws Exception;
 
     List<ConversationListDTO> readListConversationsByDeveloperId(Integer id);
 

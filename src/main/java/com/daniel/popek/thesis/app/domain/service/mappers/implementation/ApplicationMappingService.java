@@ -10,6 +10,7 @@ import com.daniel.popek.thesis.app.domain.service.mappers.IApplicationMappingSer
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +39,8 @@ public class ApplicationMappingService implements IApplicationMappingService {
         dto.setName(entity.getName());
         dto.setDescription(entity.getDescription());
         dto.setToken(entity.getToken());
-        dto.setDate(entity.getRegistrationDate().toLocalDateTime().toString());
-        dto.setLastModificationDate(entity.getLastModificationDate()==null?"":entity.getLastModificationDate().toLocalDateTime().toString());
+        dto.setDate(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(entity.getRegistrationDate()));
+        dto.setLastModificationDate(entity.getLastModificationDate()==null?"":new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(entity.getLastModificationDate()));
         List<String> conversations = new ArrayList<>();
         for (ApplicationConversation pair: applicationConversationRepository.findAllByApplicationId(entity.getId())
              ) {
